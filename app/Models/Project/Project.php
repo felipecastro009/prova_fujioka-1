@@ -12,4 +12,9 @@ class Project extends Model
         'max_salary',
         'person_id'
     ];
+
+    public function tasks()
+    {
+        return $this->hasMany(Project::class, 'project_id');
+    }
 }

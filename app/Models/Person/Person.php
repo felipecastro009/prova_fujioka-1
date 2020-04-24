@@ -2,6 +2,7 @@
 
 namespace App\Models\Person;
 
+use App\Models\Department\Department;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
@@ -14,4 +15,9 @@ class Person extends Model
         'hire_date',
         'department_id'
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'person_id');
+    }
 }
