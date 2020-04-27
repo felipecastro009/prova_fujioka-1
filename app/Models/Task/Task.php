@@ -14,8 +14,16 @@ class Task extends Model
         'status',
         'start_date',
         'end_date',
-        'project_id'
+        'project_id',
     ];
+
+    /**
+     * Scopes
+     */
+    public function scopeStatus($query, $status)
+    {
+        $query->where('status', $status);
+    }
 
     public function project()
     {

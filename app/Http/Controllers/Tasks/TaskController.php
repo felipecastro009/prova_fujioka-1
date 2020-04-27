@@ -15,11 +15,54 @@ class TaskController extends Controller
         $this->tasks = $tasks;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $query = $this->tasks;
 
-        $results = $this->tasks->all();
+        // Filter by status param
+        if ($request->filled('status')):
+            $query->status($request->get('status'));
+        endif;
+
+        // Filter by date
+        if ($request->filled('inicio') && $request->filled('fim')):
+            $start_date = $request->get('inicio');
+            $end_date = $request->get('fim');
+            $query->where('start_date', '>=', $start_date)
+                ->where('end_date', '<=', $end_date);
+        endif;
+
+        $results = $query->orderBy('id', 'ASC')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+        ], 200);
+    }
+
+    public function dates($incio, $fim)
+    {
+        $results = $this->tasks->where('start_date', '>=', $incio)->where('end_date', '<=', $fim)->orderBy('id', 'ASC')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+        ], 200);
+    }
+
+    public function active($incio, $fim)
+    {
+        $results = $this->tasks->where('status', 1)->where('start_date', '>=', $incio)->where('end_date', '<=', $fim)->orderBy('id', 'ASC')->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $results,
+        ], 200);
+    }
+
+    public function deactive($incio, $fim)
+    {
+        $results = $this->tasks->where('status', 2)->where('start_date', '>=', $incio)->where('end_date', '<=', $fim)->orderBy('id', 'ASC')->get();
 
         return response()->json([
             'success' => true,
