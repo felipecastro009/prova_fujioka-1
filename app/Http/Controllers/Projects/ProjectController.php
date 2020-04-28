@@ -29,7 +29,9 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $result = $this->projects->create($request->all());
+        $result = $this->projects->create($request->except('persons'));
+
+        $result->persons()->attach($request->get('persons'));
 
         return response()->json([
             'success' => true,
@@ -41,7 +43,9 @@ class ProjectController extends Controller
     {
         $result = $this->projects->where('id', $id)->firstOrfail();
 
-        $result->update($request->all());
+        $result->update($request->except('persons'));
+
+        $result->persons()->sync($request->get('persons'));
 
         $result->save();
 
