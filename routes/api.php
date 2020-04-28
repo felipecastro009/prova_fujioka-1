@@ -35,7 +35,16 @@ Route::prefix('projetos')->group(function () {
     Route::name('projects.store')->post('/', 'Projects\ProjectController@store');
     Route::name('projects.update')->put('/{id}', 'Projects\ProjectController@update');
     Route::name('projects.destroy')->delete('/{id}', 'Projects\ProjectController@destroy');
+
+    // Projects
+    Route::prefix('historico')->group(function () {
+        Route::name('projects_histories.index')->get('/', 'Projects\ProjectHistoryController@index');
+        Route::name('projects_histories.store')->post('/', 'Projects\ProjectHistoryController@store');
+        Route::name('projects_histories.update')->put('/{id}', 'Projects\ProjectHistoryController@update');
+        Route::name('projects_histories.destroy')->delete('/{id}', 'Projects\ProjectHistoryController@destroy');
+    });
 });
+
 
 
 // Departmets
