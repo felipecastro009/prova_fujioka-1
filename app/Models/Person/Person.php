@@ -24,8 +24,13 @@ class Person extends Model
         return $this->belongsTo(Department::class, 'department_id');
     }
 
-    public function projects()
+    public function projectsManager()
     {
         return $this->hasMany(Project::class, 'person_id');
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'projects_persons', 'project_id', 'person_id');
     }
 }

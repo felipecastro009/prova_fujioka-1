@@ -23,4 +23,9 @@ class Project extends Model
     {
         return $this->belongsTo(Person::class, 'person_id');
     }
+
+    public function persons()
+    {
+        return $this->belongsToMany(Person::class, 'projects_persons', 'person_id', 'project_id');
+    }
 }
