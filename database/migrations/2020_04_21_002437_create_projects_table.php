@@ -31,6 +31,16 @@ class CreateProjectsTable extends Migration
             $table->foreign('person_id')->references('id')->on('persons');
             $table->timestamps();
         });
+
+        Schema::create('projects_persons', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('person_id');
+
+            $table->foreign('person_id')->references('id')->on('persons');
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -40,6 +50,8 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('projects_persons');
+        Schema::dropIfExists('project_history');
         Schema::dropIfExists('projects');
     }
 }
