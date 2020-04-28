@@ -13,6 +13,6 @@ class Department extends Model
 
     public function persons()
     {
-        return $this->hasMany(Person::class, 'person_id');
+        return $this->hasMany(Person::class, 'department_id');
     }
 }

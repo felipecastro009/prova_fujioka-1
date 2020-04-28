@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Persons;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Persons\PersonResource;
 use App\Models\Person\Person;
 use Illuminate\Http\Request;
 
@@ -21,9 +22,11 @@ class PersonController extends Controller
 
         $results = $this->persons->all();
 
+        $data = PersonResource::collection($results);
+
         return response()->json([
             'success' => true,
-            'data' => $results,
+            'data' => $data,
         ], 200);
     }
 

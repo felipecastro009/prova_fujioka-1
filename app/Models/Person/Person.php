@@ -3,6 +3,7 @@
 namespace App\Models\Person;
 
 use App\Models\Department\Department;
+use App\Models\Project\Project;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
@@ -20,6 +21,11 @@ class Person extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'person_id');
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'person_id');
     }
 }
